@@ -3,23 +3,29 @@
  */
 
 app = angular.module('FormTable',[]);
-app.controller("myCtrl",function($scope){
+app.controller("myCtrl",['$scope', '$filter', function($scope, $filter){
     $scope.people = [];
-    $scope.person = {
-        ngFirstName:"",
-        ngLastName: "",
-        ngPhone: "",
-        ngGender:"",
-        ngAge:"",
-    };
     $scope.addData = function() {
-        $scope.person.ngFirstName = $scope.firstName;
-        $scope.person.ngLastName = $scope.lastName;
-        $scope.person.ngPhone = $scope.phone;
-        $scope.person.ngGender = $scope.gender;
-        $scope.person.ngAge = $scope.age;
-
-        $scope.people.push($scope.person);
+        var person = {
+            ngFirstName:$scope.firstName,
+            ngLastName: $scope.lastName,
+            ngPhone: $scope.phone,
+            ngGender:$scope.gender,
+            ngAge:$scope.age,
+        };
+        $scope.people.push(person);
+        $scope.order('ngFirstName');
+        clearUpFields_void();
     };
 
-});
+    $scope.removeData = function(curPers) {
+        $scope.people.splice($scope.people.indexOf(curPers),1);
+    };
+
+    var orderBy = $filter('orderBy');
+    $scope.order = function(predicate) {
+        $scope.predicate = predicate;
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.people = orderBy($scope.people, predicate, $scope.reverse);
+    };
+}]);

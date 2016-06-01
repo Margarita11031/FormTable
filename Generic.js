@@ -2,32 +2,44 @@
  * Created by Margarita on 01.06.2016.
  */
 
-var blnValFields = false;
-function checkInfo_bln(form){
-    var strFirstName = form.firstName.value,
-        strLastName = form.lastName.value,
-        strPhone = form.phone.value,
-        strAge = form.age.value;
-    var blnValidFields = true;
-    blnValidFields &= (strFirstName != "" && strLastName != "");
-    var rexPhoneMask = /^\+\d{11,13}/;
-    blnValidFields &= (strPhone != "" && rexPhoneMask.test(strPhone));
-    blnValidFields &= (strAge != "" && parseFloat(strPhone) > 0);
-
-    if(!blnValidFields)
-        alert("Please check entered information");
-    return blnValidFields;
-}
-
 var validCreds = {
     firstName: function(element){
-        return element
+        return element.value!="";
+    },
+    lastName: function(element){
+        return element.value!="";
+    },
+    phone: function(element){
+        var rexPhoneMask =/^\+\d{11,13}/;
+        var result = (element.value!="" && rexPhoneMask.test(element.value))
+        return result;
+    },
+    age: function(element){
+        var result = (element.value!="" && parseFloat(element.value) > 0)
+        return result;
     }
 };
 
-    customObject['firstName'](param);
-
-
 function checkField_void(element){
-    validCreds[element.name](element);
+    if(!validCreds[element.name](element)){
+        element.parentElement.setAttribute("class","form-group has-error")
+    }else{
+        element.parentElement.setAttribute("class","form-group")
+    }
+    if(document.getElementsByClassName("form-group has-error").length >0){
+        document.getElementById("putInTable").disabled = true;
+    }else{
+        document.getElementById("putInTable").disabled = false;
+    }
+
+}
+
+function clearUpFields_void(){
+    var inputNodes = document.getElementsByTagName("input");
+    for(var i=0; i<inputNodes.length; i++){
+        if(inputNodes[i].type=="text" || inputNodes[i].type=="number"){
+            inputNodes[i].value="";
+        }
+    }
+
 }

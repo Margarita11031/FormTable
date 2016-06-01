@@ -4,9 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="StyleTable.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <script src="angular.min.js"></script>
     <script language="JavaScript" src="Generic.js"></script>
     <script language="JavaScript" src="Angular.js"></script>
     <title></title>
@@ -21,21 +20,21 @@
             <form action="#" method="" >
                 <fieldset class="form-group">
                     <label>First name</label>
-                    <input ng-model="firstName" type="text" class="form-control" name="firstName" maxlength="60" placeholder="First name"/>
+                    <input ng-model="firstName" type="text" class="form-control" name="firstName" maxlength="60" placeholder="First name" onkeyup="checkField_void(this)"/>
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Last name</label>
-                <input ng-model="lastName" type="text" class="form-control" name="lastName" maxlength="60" placeholder="Last name" />
+                <input ng-model="lastName" type="text" class="form-control" name="lastName" maxlength="60" placeholder="Last name"  onkeyup="checkField_void(this)"/>
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Phone</label>
-                    <input ng-model="phone" type="text" class="form-control" name="phone" maxlength="13" placeholder="+490995555555" />
+                    <input ng-model="phone" type="text" class="form-control" name="phone" maxlength="13" placeholder="+490995555555"  onkeyup="checkField_void(this)"/>
                 </fieldset>
                 <fieldset class="form-group">
                     <label >Gender</label>
                     <div class="radio">
                         <label>
-                            <input ng-model="gender" type="radio" name="gender" value="Male" checked/> Male
+                            <input ng-model="gender" type="radio" name="gender" value="Male" checked="true"/> Male
                         </label>
                         <label>
                             <input ng-model="gender" type="radio" name="gender" value="Female" />Female
@@ -44,9 +43,9 @@
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Age</label>
-                    <input ng-model="age" type="number" class="form-control" name="age" maxlength="3" placeholder="Age"/>
+                    <input ng-model="age" type="number" class="form-control" name="age" maxlength="3" placeholder="Age" onkeyup="checkField_void(this)"/>
                 </fieldset>
-                <input type="button" class="btn btn-lg btn-primary" name="putInTable" value="Save" ng-click="addData()"/>
+                <input type="button" class="btn btn-lg btn-primary" name="putInTable" id="putInTable" value="Save" ng-click="addData()" disabled/>
             </form>
 
             </div>
@@ -58,21 +57,32 @@
             <div class="panel-body">
                 <table class="table">
                     <tr>
-                        <th>#</th>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Phone</th>
-                        <th>Gender</th>
-                        <th>Age</th>
-                    </tr>
-
-                    <tr>
-                        <td>0</td>
-                        <td>Margarita</td>
-                        <td>Sadovets</td>
-                        <td>+380962864951</td>
-                        <td>Gender</td>
-                        <td>Age</td>
+                        <th>
+                            <button class="btn btn-sm btn-default" disabled>#</button>
+                        </th>
+                        <th>
+                            <button class="btn btn-sm btn-primary" ng-click="order('ngFirstName')">First name</button>
+                            <span class="sortorder" ng-show="predicate === 'ngFirstName'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <button class="btn btn-sm btn-primary" ng-click="order('ngLastName')">Last name</button>
+                            <span class="sortorder" ng-show="predicate === 'ngLastName'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <button class="btn btn-sm btn-primary" ng-click="order('ngPhone')">Phone</button>
+                            <span class="sortorder" ng-show="predicate === 'ngPhone'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <button class="btn btn-sm btn-primary" ng-click="order('ngGender')">Gender</button>
+                            <span class="sortorder" ng-show="predicate === 'ngGender'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <button class="btn btn-sm btn-primary" ng-click="order('ngAge')">Age</button>
+                            <span class="sortorder" ng-show="predicate === 'ngAge'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <button class="btn btn-sm btn-default" disabled>Delete</button>
+                        </th>
                     </tr>
                     <tr ng-repeat="person in people">
                         <td>{{$index + 1}} </td>
@@ -81,6 +91,9 @@
                         <td>{{person.ngPhone}}</td>
                         <td>{{person.ngGender}}</td>
                         <td>{{person.ngAge}}</td>
+                        <td>
+                            <input type="button" class="btn btn-lg btn-primary" name="deleteFromTable" id="deleteFromTable" value="Delete" ng-click="removeData(person)"/>
+                        </td>
                     </tr>
                 </table>
             </div>
