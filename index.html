@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app="FormTable" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="StyleTable.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script language="JavaScript" src="Generic.js"></script>
+    <script language="JavaScript" src="Angular.js"></script>
+    <title></title>
+</head>
+<body ng-controller="myCtrl" role="document">
+    <div class="container theme-showcase">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Fill out the form below</h1>
+            </div>
+            <div class="panel-body">
+            <form action="#" method="" >
+                <fieldset class="form-group">
+                    <label>First name</label>
+                    <input ng-model="firstName" type="text" class="form-control" name="firstName" maxlength="60" placeholder="First name"/>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Last name</label>
+                <input ng-model="lastName" type="text" class="form-control" name="lastName" maxlength="60" placeholder="Last name" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Phone</label>
+                    <input ng-model="phone" type="text" class="form-control" name="phone" maxlength="13" placeholder="+490995555555" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label >Gender</label>
+                    <div class="radio">
+                        <label>
+                            <input ng-model="gender" type="radio" name="gender" value="Male" checked/> Male
+                        </label>
+                        <label>
+                            <input ng-model="gender" type="radio" name="gender" value="Female" />Female
+                        </label>
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Age</label>
+                    <input ng-model="age" type="number" class="form-control" name="age" maxlength="3" placeholder="Age"/>
+                </fieldset>
+                <input type="button" class="btn btn-lg btn-primary" name="putInTable" value="Save" ng-click="addData()"/>
+            </form>
+
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">People </h1>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Phone</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                    </tr>
+
+                    <tr>
+                        <td>0</td>
+                        <td>Margarita</td>
+                        <td>Sadovets</td>
+                        <td>+380962864951</td>
+                        <td>Gender</td>
+                        <td>Age</td>
+                    </tr>
+                    <tr ng-repeat="person in people">
+                        <td>{{$index + 1}} </td>
+                        <td>{{person.ngFirstName}}</td>
+                        <td>{{person.ngLastName}}</td>
+                        <td>{{person.ngPhone}}</td>
+                        <td>{{person.ngGender}}</td>
+                        <td>{{person.ngAge}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
