@@ -48,5 +48,5 @@ function clearUpFields_void() {
             inputNodes[i].value = "";
         }
     }
-    document.getElementById("putInTable").disabled = false;
+    document.getElementById("putInTable").disabled = true;
 }
